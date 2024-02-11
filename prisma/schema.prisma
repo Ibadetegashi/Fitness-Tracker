@@ -44,7 +44,6 @@ model WorkoutPlan {
   description String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
   user      User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   exercises Exercise[]
 }
@@ -58,6 +57,5 @@ model Exercise {
   duration      Int // in seconds
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-
   workoutPlan WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

@@ -104,6 +104,7 @@ const login = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+
 module.exports = {
     register,
     confirmToken,

@@ -61,7 +61,10 @@ const editProfile = async (req, res) => {
         })
 
         delete profile.User.password
-        res.status(200).json({ message: 'Updated profile with new information.', profile })
+        res.status(200).json({
+            message: 'Updated profile with new information.',
+            profile
+        })
 
     } catch (error) {
         console.log(error);
@@ -131,9 +134,34 @@ const confirmEmailUpdate = async (req, res) => {
 
     }
 };
+
+const getUserProfile = async (req, res) => {
+    try {
+        const userId = +req.user.userId;
+
+        const userProfile = await prisma.userProfile.findUnique({
+            where: {
+                userId
+            }
+        });
+
+        if (!userProfile) {
+            return res.status(404).json({ error: 'User profile not found' });
+        }
+
+        return res.status(200).json(userProfile);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+
 module.exports = {
     createUserProfile,
     editProfile,
     updateUserEmail,
-    confirmEmailUpdate
+    confirmEmailUpdate,
+    getUserProfile
 }
